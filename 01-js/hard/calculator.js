@@ -17,6 +17,67 @@
   - `npm run test-calculator`
 */
 
-class Calculator {}
+class Calculator {
+  constructor() {
+    this.result = 0;
+  }
+
+  add(number) {
+    if (typeof number !== "number") {
+      throw new Error("Invalid input: expected a number");
+    }
+    this.result += number;
+  }
+
+  subtract(number) {
+    if (typeof number !== "number") {
+      throw new Error("Invalid input: expected a number");
+    }
+    this.result -= number;
+  }
+
+  multiply(number) {
+    if (typeof number !== "number") {
+      throw new Error("Invalid input: expected a number");
+    }
+    this.result *= number;
+  }
+
+  divide(number) {
+    if (typeof number !== "number") {
+      throw new Error("Invalid input: expected a number");
+    }
+    if (number === 0) {
+      throw new Error("Division by zero is not allowed");
+    }
+    this.result /= number;
+  }
+
+  clear() {
+    this.result = 0;
+  }
+
+  getResult() {
+    return this.result;
+  }
+
+  calculate(expression) {
+    const sanitizedExpression = expression.replace(/\s+/g, ""); // Remove all whitespaces from the expression
+
+    // Validate the expression
+    if (!/^[0-9+\-*/().]+$/.test(sanitizedExpression)) {
+      throw new Error("Invalid expression: contains invalid characters");
+    }
+
+    try {
+      this.result = eval(sanitizedExpression);
+      if (!isFinite(this.result)) {
+        throw new Error("Invalid expression: division by zero");
+      }
+    } catch (error) {
+      throw new Error("Invalid expression");
+    }
+  }
+}
 
 module.exports = Calculator;
